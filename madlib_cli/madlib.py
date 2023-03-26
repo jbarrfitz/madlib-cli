@@ -2,11 +2,13 @@ import re
 
 
 def read_template(madlib_template):
-    try:
-        with open(madlib_template, "r") as template:
-            return template.read()
-    except FileNotFoundError:
-        return "File was not found."
+    """
+    Reads the file into memory and returns the contents
+    :param madlib_template: text file
+    :return: (str) contents of the text file
+    """
+    with open(madlib_template, "r") as template:
+        return template.read()
 
 
 def parse_template(madlib_template):
@@ -29,7 +31,14 @@ def parse_template(madlib_template):
 
 
 def merge(stripped_template, user_prompt_responses):
+    """
+    Combines the stripped madlib template with the user's responses
+    :param stripped_template: string containing braces where responses should appear
+    :param user_prompt_responses: tuple of responses provided by the user in the cli
+    :return: (str) template with the braces replaced by those responses.
+    """
     completed_madlib = stripped_template
     for response in user_prompt_responses:
         completed_madlib = completed_madlib.replace('{}', response, 1)
     return completed_madlib
+
