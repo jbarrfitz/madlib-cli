@@ -1,5 +1,7 @@
 import pytest
-from madlib_cli.madlib import read_template, parse_template, merge
+import os
+import tempfile
+from madlib_cli.madlib import read_template, parse_template, merge, write_madlib
 
 
 def test_read_template_returns_stripped_string():
@@ -19,16 +21,27 @@ def test_parse_template():
     assert actual_parts == expected_parts
 
 
-#@pytest.mark.skip("pending")
 def test_merge():
     actual = merge("It was a {} and {} {}.", ("dark", "stormy", "night"))
     expected = "It was a dark and stormy night."
     assert actual == expected
 
 
-#@pytest.mark.skip("pending")
 def test_read_template_raises_exception_with_bad_path():
 
     with pytest.raises(FileNotFoundError):
         path = "missing.txt"
         read_template(path)
+
+
+def test_write_madlib():
+    # Credit going to Chat GPT which helped me figure out how to create a temp file
+    madlib_text = "Here is merged MadLib text"
+    expected = madlib_text
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        file_path = temp_file.name
+        write_madlib(madlib_text, file_path)
+        with open(file_path, "r") as new_file:
+            actual = new_file.read()
+            assert actual == expected
+    os.remove(file_path)

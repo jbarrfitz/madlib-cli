@@ -1,6 +1,5 @@
 import re
 
-
 def read_template(madlib_template):
     """
     Reads the file into memory and returns the contents
@@ -46,4 +45,3 @@ def merge(stripped_template, user_prompt_responses):
 def write_madlib(madlib_text, file_path):
     with open(file_path, "w") as output_file:
         output_file.write(madlib_text)
-
