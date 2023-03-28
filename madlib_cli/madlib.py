@@ -42,3 +42,8 @@ def merge(stripped_template, user_prompt_responses):
         completed_madlib = completed_madlib.replace('{}', response, 1)
     return completed_madlib
 
+
+def write_madlib(madlib_text, file_path):
+    with open(file_path, "w") as output_file:
+        output_file.write(madlib_text)
+
